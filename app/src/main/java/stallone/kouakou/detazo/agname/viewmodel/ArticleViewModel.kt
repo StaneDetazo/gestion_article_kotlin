@@ -3,6 +3,7 @@ package stallone.kouakou.detazo.agname.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.lifecycle.asLiveData
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import stallone.kouakou.detazo.agname.data.db.AppDatabase
 import stallone.kouakou.detazo.agname.data.entites.Article
@@ -30,4 +31,9 @@ class ArticleViewModel(application: Application) : AndroidViewModel(application)
     fun delete(article: Article) = viewModelScope.launch {
         repository.delete(article)
     }
+
+//    fun getArticleById(articleId: Int): Flow<Article?> {
+//        return repository.getArticleById(articleId)
+//    }
+
 }

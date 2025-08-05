@@ -19,4 +19,5 @@ class ArticleRepository(private val dao: ArticleDao) {
     suspend fun delete(article: Article) {
         dao.delete(article)
     }
+
 }

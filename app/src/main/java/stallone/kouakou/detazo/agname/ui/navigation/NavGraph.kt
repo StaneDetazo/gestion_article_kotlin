@@ -13,8 +13,8 @@ import stallone.kouakou.detazo.agname.ui.screens.ArticleListScreen
 import stallone.kouakou.detazo.agname.ui.screens.ClientHomeScreen
 import stallone.kouakou.detazo.agname.ui.screens.LoginScreen
 import stallone.kouakou.detazo.agname.ui.screens.RegisterScreen
-import stallone.kouakou.detazo.agname.ui.screens.SaleScreen
 import stallone.kouakou.detazo.agname.ui.screens.cart.CartScreen
+//import stallone.kouakou.detazo.agname.ui.screens.sales.SalesScreen
 import stallone.kouakou.detazo.agname.viewmodel.ArticleViewModel
 import stallone.kouakou.detazo.agname.viewmodel.CartViewModel
 import stallone.kouakou.detazo.agname.viewmodel.SaleViewModel
@@ -83,7 +83,7 @@ fun AppNavGraph(
             )
         }
         composable(Routes.FORM) {
-            ArticleFormScreen(viewModel = viewModel, onArticleSaved = { navController.popBackStack() })
+            ArticleFormScreen(viewModel = viewModel, onArticleSaved = { navController.popBackStack() }, onNavigateBack = { navController.popBackStack() })
         }
 
         composable("${Routes.EDIT}/{articleId}") { backStackEntry ->
@@ -94,8 +94,15 @@ fun AppNavGraph(
             }
         }
 
-        composable("vente") {
-            SaleScreen(navController = navController, articleViewModel = viewModel, saleViewModel = saleViewModel)
+        composable("sales") {
+//            SalesScreen(
+//                saleViewModel = saleViewModel,
+//                articleViewModel = viewModel
+//            )
         }
+//
+//        composable("vente") {
+//            SaleScreen(navController = navController, articleViewModel = viewModel, saleViewModel = saleViewModel)
+//        }
     }
 }

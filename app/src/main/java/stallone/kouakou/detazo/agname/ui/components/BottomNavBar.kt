@@ -21,7 +21,7 @@ fun BottomNavBar(navController: NavHostController, isAdmin: Boolean) {
     val items = if (isAdmin) {
         listOf(
             BottomNavItem("Articles", Icons.Default.List, Routes.LIST),
-            BottomNavItem("Vente", Icons.Default.ShoppingCart, "vente"),
+            BottomNavItem("Ventes", Icons.Default.ShoppingCart, "sales"),
             BottomNavItem("Profil", Icons.Default.AccountCircle, "admin_home"),
         )
     } else {

@@ -6,8 +6,6 @@ import stallone.kouakou.detazo.agname.data.entites.Article
 
 @Dao
 interface ArticleDao {
-    @Query("SELECT * FROM articles ORDER BY id DESC")
-    fun getAll(): Flow<List<Article>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(article: Article)
@@ -18,7 +16,12 @@ interface ArticleDao {
     @Delete
     suspend fun delete(article: Article)
 
+    @Query("SELECT * FROM articles ORDER BY id DESC")
+    fun getAll(): Flow<List<Article>>
+
+//    @Query("SELECT * FROM articles WHERE id = :id")
+//    fun getArticleById(id: Int): Flow<Article?>
+
     @Query("UPDATE articles SET quantity = quantity - :qtySold WHERE id = :articleId AND quantity >= :qtySold")
     suspend fun decrementStock(articleId: Int, qtySold: Int)
-
 }
