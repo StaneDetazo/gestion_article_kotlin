@@ -33,18 +33,32 @@ class CartViewModel : ViewModel() {
         return _items.sumOf { it.totalPrice }
     }
 
-    fun checkout(articleViewModel: ArticleViewModel) {
-        for (item in items) {
-            val article = item.article
-            val newQuantity = article.quantity - item.quantity
+//    fun checkout(articleViewModel: ArticleViewModel) {
+//        for (item in items) {
+//            val article = item.article
+//            val newQuantity = article.quantity - item.quantity
+//
+//            // Mise à jour locale de la quantité
+//            article.quantity = newQuantity
+//
+//            // Mise à jour via le viewModel (base de données ou state)
+//            articleViewModel.update(article)
+//        }
+//
+//        clearCart() // Vider le panier après paiement
+//    }
+fun checkout(articleViewModel: ArticleViewModel, saleViewModel: SaleViewModel) {
+    for (item in items) {
+        val article = item.article
+        val newQuantity = (article.quantity - item.quantity).coerceAtLeast(0)
 
-            // Mise à jour locale de la quantité
-            article.quantity = newQuantity
+        article.quantity = newQuantity
+        articleViewModel.update(article)
 
-            // Mise à jour via le viewModel (base de données ou state)
-            articleViewModel.update(article)
-        }
-
-        clearCart() // Vider le panier après paiement
+        // Enregistrer la vente !
+        saleViewModel.sellArticle(article.id, item.quantity)
     }
+    clearCart()
+}
+
 }

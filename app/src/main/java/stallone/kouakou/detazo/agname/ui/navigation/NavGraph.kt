@@ -13,6 +13,7 @@ import stallone.kouakou.detazo.agname.ui.screens.ArticleListScreen
 import stallone.kouakou.detazo.agname.ui.screens.ClientHomeScreen
 import stallone.kouakou.detazo.agname.ui.screens.LoginScreen
 import stallone.kouakou.detazo.agname.ui.screens.RegisterScreen
+import stallone.kouakou.detazo.agname.ui.screens.SaleScreen
 import stallone.kouakou.detazo.agname.ui.screens.cart.CartScreen
 //import stallone.kouakou.detazo.agname.ui.screens.sales.SalesScreen
 import stallone.kouakou.detazo.agname.viewmodel.ArticleViewModel
@@ -67,7 +68,8 @@ fun AppNavGraph(
         composable("cart") {
             CartScreen(
                 cartViewModel = cartViewModel,
-                articleViewModel = viewModel
+                articleViewModel = viewModel,
+                saleViewModel = saleViewModel
             ) {
                 // Logique de paiement ici
             }
@@ -95,10 +97,7 @@ fun AppNavGraph(
         }
 
         composable("sales") {
-//            SalesScreen(
-//                saleViewModel = saleViewModel,
-//                articleViewModel = viewModel
-//            )
+            SaleScreen(saleViewModel = saleViewModel)
         }
 //
 //        composable("vente") {

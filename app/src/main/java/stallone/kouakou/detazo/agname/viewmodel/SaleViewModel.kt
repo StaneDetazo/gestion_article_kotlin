@@ -33,7 +33,4 @@ class SaleViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getSalesByArticle(articleId: Int): Flow<List<Sale>> =
         repository.getSalesByArticle(articleId)
-
-
-
 }

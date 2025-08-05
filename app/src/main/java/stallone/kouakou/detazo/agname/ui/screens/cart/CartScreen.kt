@@ -11,12 +11,14 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import stallone.kouakou.detazo.agname.viewmodel.ArticleViewModel
 import stallone.kouakou.detazo.agname.viewmodel.CartViewModel
+import stallone.kouakou.detazo.agname.viewmodel.SaleViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(
     cartViewModel: CartViewModel,
     articleViewModel: ArticleViewModel,
+    saleViewModel: SaleViewModel,
     onCheckout: () -> Unit
 ) {
     val items = cartViewModel.items
@@ -48,7 +50,8 @@ fun CartScreen(
             Row {
                 Button(
                     onClick = {
-                        cartViewModel.checkout(articleViewModel)
+                        //cartViewModel.checkout(articleViewModel)
+                        cartViewModel.checkout(articleViewModel, saleViewModel)
                         scope.launch {
                             snackbarHostState.showSnackbar("✅ Paiement effectué avec succès !")
                         }

@@ -100,12 +100,14 @@ fun ArticleItem(
             }
 
             Spacer(modifier = Modifier.height(8.dp))
+            if (!isAdmin) {
 
-            Button(
-                onClick = onAddToCart,
-                enabled = article.isActive && article.quantity > 0
-            ) {
-                Text("Ajouter au panier")
+                Button(
+                    onClick = onAddToCart,
+                    enabled = article.isActive && article.quantity > 0
+                ) {
+                    Text("Ajouter au panier")
+                }
             }
         }
     }
