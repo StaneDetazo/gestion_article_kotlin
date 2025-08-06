@@ -9,7 +9,10 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import stallone.kouakou.detazo.agname.data.entites.Article
@@ -32,13 +35,20 @@ fun ArticleListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Articles en stock") }
+                title = { Text("Articles en stock", color = Color.White) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF0D1B2A), // Bleu très foncé
+                )
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             if (isAdmin) {
-                FloatingActionButton(onClick = onAddClick) {
+                FloatingActionButton(
+                    onClick = onAddClick,
+                    containerColor = Color(0xFF1B263B),
+                    contentColor = Color.White
+                ) {
                     Icon(Icons.Default.Add, contentDescription = "Ajouter")
                 }
             }
@@ -48,11 +58,11 @@ fun ArticleListScreen(
             contentPadding = padding,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             if (articles.isEmpty()) {
                 item {
-                    Text("Aucun article disponible.")
+                    Text("Aucun article disponible.", color = Color.Gray)
                 }
             } else {
                 items(articles) { article ->
@@ -80,33 +90,47 @@ fun ArticleItem(
     onAddToCart: () -> Unit,
     isAdmin: Boolean
 ) {
+    val bgColor = if (article.isActive) Color(0xFF415A77) else Color(0xFF6C757D) // gris-bleu
+    val textColor = Color.White
+    val buttonColor = Color(0xFF1B263B)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .then(
-                if (isAdmin) Modifier.clickable { onClick() }
-                else Modifier
-            ),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+            .clickable(enabled = isAdmin) { onClick() },
+        colors = CardDefaults.cardColors(containerColor = bgColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(article.name, style = MaterialTheme.typography.titleMedium)
-            Text("Catégorie : ${article.category}")
-            Text("Prix : ${article.price} FCFA")
-            Text("Quantité : ${article.quantity}")
-            if (!article.isActive) {
-                Text("Inactif", color = MaterialTheme.colorScheme.error)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(article.name, color = textColor, style = MaterialTheme.typography.titleMedium)
+                Spacer(Modifier.height(4.dp))
+                Text("Catégorie : ${article.category}", color = Color.LightGray)
+                Text("Prix : ${article.price} FCFA", color = Color.LightGray)
+                Text("Quantité : ${article.quantity}", color = Color.LightGray)
+
+                if (!article.isActive) {
+                    Text("Inactif", color = Color(0xFFD32F2F), fontWeight = FontWeight.Bold)
+                }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-            if (!isAdmin) {
-
+            if (!isAdmin && article.isActive && article.quantity > 0) {
                 Button(
                     onClick = onAddToCart,
-                    enabled = article.isActive && article.quantity > 0
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = buttonColor,
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier.align(Alignment.Bottom)
                 ) {
-                    Text("Ajouter au panier")
+                    Text("Ajouter")
                 }
             }
         }

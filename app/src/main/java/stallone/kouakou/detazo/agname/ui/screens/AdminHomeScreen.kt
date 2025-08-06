@@ -32,7 +32,7 @@ fun AdminHomeScreen(
         .fillMaxSize()
         .padding(16.dp)) {
 
-        Text("Bienvenue Admin", style = MaterialTheme.typography.headlineMedium)
+        Text("Navigation rapide", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -47,6 +47,16 @@ fun AdminHomeScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        Button(
+            onClick = {
+                navController.navigate("sales")
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Voir les ventes effectuées")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
                 scope.launch {
